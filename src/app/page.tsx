@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-slate-100">
       <div className="font-lightbold mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-2 text-xl md:text-3xl lg:grid-cols-2">
-        <div className="flex flex-col items-center justify-center max-lg:order-2">
+        <div className="flex flex-col items-center justify-center max-lg:order-1">
           <div>In a time where every cent counts,</div>
           <div>
             <span className="font-bold">CentCheck</span> has your back.
@@ -20,10 +20,10 @@ export default async function Home() {
             alt="CentCheck logo"
           />
         </div>
-        <div className="col-span-2 flex justify-center">
+        <div className="flex justify-center lg:col-span-2 order-3">
           <Link
             href="/search"
-            className="max-w-max mx-auto rounded-lg bg-blue-700 px-5 py-2.5 text-center text-md font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-md mx-auto max-w-max rounded-lg bg-blue-700 px-5 py-2.5 text-center font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save Today
           </Link>
