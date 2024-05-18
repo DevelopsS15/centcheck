@@ -19,6 +19,9 @@ const config = {
       {
         hostname: "encrypted-tbn0.gstatic.com",
       },
+      {
+        hostname: "assets.shop.loblaws.ca",
+      },
     ],
   },
 };
