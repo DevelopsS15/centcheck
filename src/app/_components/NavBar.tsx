@@ -35,21 +35,24 @@ export default function NavBar() {
   return (
     <nav className="sticky start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-sm flex-wrap items-center justify-between p-4">
-        <a
-          href="/"
-          className="flex w-full items-center justify-center rtl:space-x-reverse"
-        >
-          <Image
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            width={64}
-            height={64}
-            alt="CentCheck Logo"
-          />
-          <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-            CentCheck
-          </span>
-        </a>
+        <div className="flex w-full flex-col items-center justify-center">
+          <a
+            href="/"
+            className="flex w-full items-center justify-center rtl:space-x-reverse"
+          >
+            <Image
+              src="/CentCheck.png"
+              className="h-8 w-8"
+              width={64}
+              height={64}
+              alt="CentCheck Logo"
+            />
+            <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+              CentCheck
+            </span>
+          </a>
+          <div>Saving Every Cent</div>
+        </div>
         <div className="flex space-x-3 max-md:w-full md:order-2 md:space-x-0 rtl:space-x-reverse">
           <div className="flex items-center gap-2 max-md:w-11/12 md:hidden">
             <SearchBar />
@@ -68,10 +71,10 @@ export default function NavBar() {
             </Link>
           ) : (
             <Link
-              href="/signup"
+              href="/search"
               className="hidden rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 md:block dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Get started
+              Save Today
             </Link>
           )}
           <button
@@ -121,10 +124,10 @@ export default function NavBar() {
               <SearchBar />
             </div>
             <Link
-              href="/signup"
+              href="/search"
               className="rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 md:hidden dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Get started
+              Save Today
             </Link>
           </ul>
         </div>
