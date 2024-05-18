@@ -193,7 +193,7 @@ function ProductPricingDisplay({
               }
               width={24}
               height={24}
-              alt="Store logo"
+              alt={`${index === 0 ? "Superstore" : "FreshCo"} Store`}
             />
             <div className="flex-1 text-right">
               {new Intl.NumberFormat("en-CA", {
