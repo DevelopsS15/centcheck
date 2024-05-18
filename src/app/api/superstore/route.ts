@@ -58,18 +58,43 @@ export async function GET() {
     code: string;
     prices: { price: { value: number } };
     imageAssets: { mediumUrl: string }[];
+    upcs: [string];
   }[];
 
   const allProducts = await db.product.createMany({
-    data: productsFromStore.map((result) => ({
-      name: result.name,
-      price: result.prices.price.value,
-      internalStoreId: result.code,
-      storeLocationId: storeLocation.id,
-      imageIds: [result.imageAssets[0]!.mediumUrl],
-      startedTrackingAt: new Date(),
-      lastCheckedAt: new Date(),
-    })),
+    data: productsFromStore
+      .map((result) => ({
+        name: result.name,
+        price: result.prices.price.value,
+        barcodeId: result.upcs[0],
+        internalStoreId: result.code,
+        storeLocationId: storeLocation.id,
+        imageIds: [result.imageAssets[0]!.mediumUrl],
+        startedTrackingAt: new Date(),
+        lastCheckedAt: new Date(),
+      }))
+      .concat([
+        {
+          name: "Coca Cola",
+          price: 3.21,
+          barcodeId: "06731906",
+          internalStoreId: "3242342342",
+          storeLocationId: storeLocation.id,
+          imageIds: [],
+          startedTrackingAt: new Date(),
+          lastCheckedAt: new Date(),
+        },
+        {
+          name: "Crush Cream Soda",
+          price: 2.5,
+          barcodeId: "05654503",
+          internalStoreId: "6456546",
+          storeLocationId: storeLocation.id,
+          imageIds: ["00056000005453.jpg"],
+          startedTrackingAt: new Date(),
+          lastCheckedAt: new Date(),
+        },
+      ]),
   });
 
   return NextResponse.json({
