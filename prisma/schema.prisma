@@ -44,36 +44,32 @@ model UserCart {
 model Store {
     id            String          @id @default(auto()) @map("_id") @db.ObjectId
     name          String
+    imageId       String
     StoreLocation StoreLocation[]
 }
 
 model StoreLocation {
-    id           String         @id @default(auto()) @map("_id") @db.ObjectId
-    number       String
-    zipCode      String
-    city         String
-    state        String
-    country      String
-    store        Store          @relation(fields: [storeId], references: [id])
-    storeId      String         @db.ObjectId
-    ProductPrice ProductPrice[]
+    id         String    @id @default(auto()) @map("_id") @db.ObjectId
+    number     String
+    streetName String
+    zipCode    String
+    city       String
+    state      String
+    country    String
+    store      Store     @relation(fields: [storeId], references: [id])
+    storeId    String    @db.ObjectId
+    Product    Product[]
 }
 
 model Product {
-    id           String         @id @default(auto()) @map("_id") @db.ObjectId
-    name         String
-    barcodeId    String
-    trackedAt    DateTime
-    imageIds     String[]
-    ProductPrice ProductPrice[]
-}
-
-model ProductPrice {
-    id              String        @id @default(auto()) @map("_id") @db.ObjectId
-    price           Float
-    checkedAt       DateTime
-    product         Product       @relation(fields: [productId], references: [id])
-    productId       String        @db.ObjectId
-    storeLocation   StoreLocation @relation(fields: [storeLocationId], references: [id])
-    storeLocationId String        @db.ObjectId
+    id                String        @id @default(auto()) @map("_id") @db.ObjectId
+    internalStoreId   String
+    barcodeId         String?
+    name              String
+    price             Float
+    startedTrackingAt DateTime
+    lastCheckedAt     DateTime
+    imageIds          String[]
+    storeLocation     StoreLocation @relation(fields: [storeLocationId], references: [id])
+    storeLocationId   String        @db.ObjectId
 }

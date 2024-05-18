@@ -1,0 +1,79 @@
+import { NextResponse } from "next/server";
+import axios from "axios";
+import { headers } from "next/headers";
+import { db } from "~/server/db";
+import { Store, StoreLocation } from "@prisma/client";
+
+export async function GET() {
+  const fetchSuperstore = await axios.post(
+    "https://api.pcexpress.ca/pcx-bff/api/v1/products/search",
+    {
+      pagination: { from: 0, size: 100 },
+      banner: "superstore",
+      cartId: "c22dd690-9fe5-4886-a0e5-13078d19e1b0",
+      lang: "en",
+      date: "18052024",
+      storeId: "1523",
+      pcId: null,
+      pickupType: "STORE",
+      offerType: "ALL",
+      term: "t",
+      userData: {
+        domainUserId: "239e9210-a5c0-416c-ae57-3c4fdc13b9e3",
+        sessionId: "0bede00b-3452-413e-bcc0-5828797f304f",
+      },
+      filter: { categories: ["27985"] },
+    },
+    {
+      headers: {
+        "X-Apikey": "C1xujSegT5j3ap3yexJjqhOfELwGKYvz",
+      },
+    },
+  );
+
+  const superstore = await db.store.create({
+    data: {
+      name: "Real Canadian Superstore",
+      imageId: "3cd3009c-30dd-4f63-978e-8edbe54c3d20.png",
+    },
+  });
+
+  const storeLoc: Omit<StoreLocation, "id"> = {
+    number: "45779",
+    streetName: "Luckakuck Way",
+    zipCode: "V2R 4E8",
+    city: "Chilliwack",
+    state: "British Columbia",
+    country: "Canada",
+    storeId: superstore.id,
+  };
+
+  const storeLocation = await db.storeLocation.create({
+    data: storeLoc,
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const productsFromStore = fetchSuperstore.data.results as {
+    name: string;
+    code: string;
+    prices: { price: { value: number } };
+    imageAssets: { mediumUrl: string }[];
+  }[];
+
+  const allProducts = await db.product.createMany({
+    data: productsFromStore.map((result) => ({
+      name: result.name,
+      price: result.prices.price.value,
+      internalStoreId: result.code,
+      storeLocationId: storeLocation.id,
+      imageIds: [result.imageAssets[0]!.mediumUrl],
+      startedTrackingAt: new Date(),
+      lastCheckedAt: new Date(),
+    })),
+  });
+
+  return NextResponse.json({
+    data: fetchSuperstore.data as object[],
+    total: allProducts,
+  });
+}
