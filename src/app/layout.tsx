@@ -10,7 +10,7 @@ import { LucideLoader2 } from "lucide-react";
 export const metadata = {
   title: "CentCheck",
   description: "Saving Every Cent",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/CentCheck.png" }],
 };
 
 export default async function RootLayout({
