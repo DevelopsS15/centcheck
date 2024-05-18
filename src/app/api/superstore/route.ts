@@ -3,8 +3,13 @@ import axios from "axios";
 import { headers } from "next/headers";
 import { db } from "~/server/db";
 import { Store, StoreLocation } from "@prisma/client";
+import { env } from "~/env";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
+  if (env.NODE_ENV !== "development") {
+    return NextResponse.json({ disabled: true });
+  }
   const fetchSuperstore = await axios.post(
     "https://api.pcexpress.ca/pcx-bff/api/v1/products/search",
     {
@@ -80,7 +85,7 @@ export async function GET() {
           barcodeId: "06731906",
           internalStoreId: "3242342342",
           storeLocationId: storeLocation.id,
-          imageIds: [],
+          imageIds: ["320ab0bd-1bba-4f6e-99cb-3c741b34bd66.1b61e6dd5afa24ed92e6c36f98fb3ef6.webp"],
           startedTrackingAt: new Date(),
           lastCheckedAt: new Date(),
         },
