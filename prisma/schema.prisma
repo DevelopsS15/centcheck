@@ -6,15 +6,69 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "mongodb"
     url      = env("DATABASE_URL")
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
     name      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([name])
+}
+
+model User {
+    id             String           @id @default(auto()) @map("_id") @db.ObjectId
+    supabaseId     String
+    firstName      String
+    lastName       String
+    email          String
+    UserSavedItems UserSavedItems[]
+    UserCart       UserCart[]
+}
+
+model UserSavedItems {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @db.ObjectId
+    user   User   @relation(fields: [userId], references: [id])
+}
+
+model UserCart {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @db.ObjectId
+    user   User   @relation(fields: [userId], references: [id])
+}
+
+model Store {
+    id            String          @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    StoreLocation StoreLocation[]
+}
+
+model StoreLocation {
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    number  String
+    zipCode String
+    city    String
+    state   String
+    country String
+    store   Store  @relation(fields: [storeId], references: [id])
+    storeId String @db.ObjectId
+}
+
+model Product {
+    id           String         @id @default(auto()) @map("_id") @db.ObjectId
+    name         String
+    barcodeId    String
+    imageIds     String[]
+    ProductPrice ProductPrice[]
+}
+
+model ProductPrice {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    price     Float
+    product   Product @relation(fields: [productId], references: [id])
+    productId String  @db.ObjectId
 }
