@@ -168,12 +168,12 @@ function ProductPricingDisplay({
       price: price,
     },
   ];
-  if (productId === "6648bd84248c51a4b5a0eaa8") {
+  if (productId === "6648c890bddf565cd6cde168") {
     productPrices.push({
       id: "43534503535",
       price: 4.51,
     });
-  } else if (productId === "6648bd84248c51a4b5a0eb02") {
+  } else if (productId === "6648c890bddf565cd6cde169") {
     productPrices.push({
       id: "4535353",
       price: 3.1,
@@ -193,7 +193,7 @@ function ProductPricingDisplay({
               }
               width={24}
               height={24}
-              alt="Store logo"
+              alt={`${index === 0 ? "Superstore" : "FreshCo"} Store`}
             />
             <div className="flex-1 text-right">
               {new Intl.NumberFormat("en-CA", {
