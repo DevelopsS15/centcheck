@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { createClient } from "~/utils/supabase/client";
 
@@ -6,17 +7,25 @@ export default function Page() {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const supabase = createClient();
+  const router = useRouter();
 
   async function Login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      //   options: {
-      //     emailRedirectTo: "https://example.com/welcome",
-      //   },
-    });
-    console.log(data, error);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        //   options: {
+        //     emailRedirectTo: "https://example.com/welcome",
+        //   },
+      });
+      console.log(data, error);
+      if (data.session) {
+        router.push("/search");
+      }
+    } catch (e) {
+      alert(`Unexpected error with signup`);
+    }
   }
 
   return (

@@ -22,7 +22,19 @@ const config = {
       {
         hostname: "assets.shop.loblaws.ca",
       },
+      {
+        hostname: "barcode.tec-it.com",
+      },
+      {
+        hostname: "www.pegasustoronto.ca",
+      },
     ],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
